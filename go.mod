@@ -1,4 +1,4 @@
-module interaction-testing
+module github.com/zackartz/cmdlr3
 
 go 1.18
 

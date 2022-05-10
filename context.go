@@ -1,4 +1,4 @@
-package main
+package cmdlr3
 
 import (
 	"context"

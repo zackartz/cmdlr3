@@ -1,7 +1,8 @@
-package main
+package cmdlr3
 
 import (
 	"github.com/andersfylling/disgord"
+	"log"
 )
 
 type Router struct {
@@ -33,12 +34,12 @@ func (r *Router) InitializeCommands() disgord.HandlerReady {
 	return func(s disgord.Session, h *disgord.Ready) {
 		user, _ := r.Client.Cache().GetCurrentUser()
 
-		for i := range commands {
+		for i := range r.Commands {
 			if err := r.Client.ApplicationCommand(user.ID).Global().Create(&disgord.CreateApplicationCommand{
-				Type:        disgord.ApplicationCommandType(commands[i].Type),
-				Name:        commands[i].Name,
-				Description: commands[i].Description,
-				Options:     commands[i].Options,
+				Type:        disgord.ApplicationCommandType(r.Commands[i].Type),
+				Name:        r.Commands[i].Name,
+				Description: r.Commands[i].Description,
+				Options:     r.Commands[i].Options,
 			}); err != nil {
 				log.Fatal(err)
 			}

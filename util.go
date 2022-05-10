@@ -1,4 +1,4 @@
-package main
+package cmdlr3
 
 import "github.com/andersfylling/disgord"
 
