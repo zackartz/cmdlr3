@@ -16,16 +16,22 @@ type Ctx struct {
 type ExecutionHandler func(ctx *Ctx)
 
 func (ctx *Ctx) ResponseText(text string) error {
+	var components []*disgord.MessageComponent
+
+	if GetComponentsFromCommand(ctx.Command) != nil {
+		components = []*disgord.MessageComponent{
+			{
+				Type:       1,
+				Components: GetComponentsFromCommand(ctx.Command),
+			},
+		}
+	}
+
 	err := ctx.Interaction.Reply(context.Background(), *ctx.Session, &disgord.CreateInteractionResponse{
 		Type: 4,
 		Data: &disgord.CreateInteractionResponseData{
-			Content: text,
-			Components: []*disgord.MessageComponent{
-				{
-					Type:       1,
-					Components: GetComponentsFromCommand(ctx.Command),
-				},
-			},
+			Content:    text,
+			Components: components,
 		},
 	})
 	if err != nil {
@@ -36,16 +42,22 @@ func (ctx *Ctx) ResponseText(text string) error {
 }
 
 func (ctx *Ctx) ResponseEmbed(embed *disgord.Embed) error {
+	var components []*disgord.MessageComponent
+
+	if GetComponentsFromCommand(ctx.Command) != nil {
+		components = []*disgord.MessageComponent{
+			{
+				Type:       1,
+				Components: GetComponentsFromCommand(ctx.Command),
+			},
+		}
+	}
+
 	err := ctx.Interaction.Reply(context.Background(), *ctx.Session, &disgord.CreateInteractionResponse{
 		Type: 4,
 		Data: &disgord.CreateInteractionResponseData{
-			Embeds: []*disgord.Embed{embed},
-			Components: []*disgord.MessageComponent{
-				{
-					Type:       1,
-					Components: GetComponentsFromCommand(ctx.Command),
-				},
-			},
+			Embeds:     []*disgord.Embed{embed},
+			Components: components,
 		},
 	})
 	if err != nil {
@@ -56,17 +68,23 @@ func (ctx *Ctx) ResponseEmbed(embed *disgord.Embed) error {
 }
 
 func (ctx *Ctx) ResponseTextEmbed(text string, embed *disgord.Embed) error {
+	var components []*disgord.MessageComponent
+
+	if GetComponentsFromCommand(ctx.Command) != nil {
+		components = []*disgord.MessageComponent{
+			{
+				Type:       1,
+				Components: GetComponentsFromCommand(ctx.Command),
+			},
+		}
+	}
+
 	err := ctx.Interaction.Reply(context.Background(), *ctx.Session, &disgord.CreateInteractionResponse{
 		Type: 4,
 		Data: &disgord.CreateInteractionResponseData{
-			Embeds:  []*disgord.Embed{embed},
-			Content: text,
-			Components: []*disgord.MessageComponent{
-				{
-					Type:       1,
-					Components: GetComponentsFromCommand(ctx.Command),
-				},
-			},
+			Embeds:     []*disgord.Embed{embed},
+			Content:    text,
+			Components: components,
 		},
 	})
 	if err != nil {
