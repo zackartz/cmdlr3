@@ -39,7 +39,7 @@ func (r *Router) InitializeCommands() disgord.HandlerReady {
 				Type:        disgord.ApplicationCommandType(r.Commands[i].Type),
 				Name:        r.Commands[i].Name,
 				Description: r.Commands[i].Description,
-				Options:     r.Commands[i].Options,
+				Options:     append(r.Commands[i].Options, r.Commands[i].ConvertSubcommandArray()...),
 			}); err != nil {
 				log.Fatal(err)
 			}
@@ -79,7 +79,20 @@ func (r *Router) Handler() disgord.HandlerInteractionCreate {
 			Router:      r,
 		}
 		for _, cmd := range r.Commands {
-			if h.Data.Name != "" && h.Data.Name == cmd.CustomID {
+			if h.Data.Name != "" && h.Data.Name == cmd.Name {
+				if h.Data.Options != nil {
+					subCmd := checkForSubCommand(cmd, h.Data.Options)
+
+					subCmd.Handler(&SubCommandCtx{
+						Client:      r.Client,
+						Session:     &s,
+						Interaction: h,
+						Command:     subCmd,
+						Router:      r,
+					})
+					return
+				}
+
 				ctx.Command = cmd
 
 				cmd.Handler(ctx)

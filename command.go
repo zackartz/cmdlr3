@@ -8,8 +8,18 @@ type Command struct {
 	Description string
 	Options     []*disgord.ApplicationCommandOption
 	Components  []*CommandMessageComponent
+	SubCommands []*SubCommand
 	Type        int
 	Handler     ExecutionHandler
+}
+
+type SubCommand struct {
+	Name        string
+	Description string
+	Options     []*disgord.ApplicationCommandOption
+	SubCommands []*SubCommand
+	Components  []*CommandMessageComponent
+	Handler     SubCommandExecutionHandler
 }
 
 type CommandMessageComponent struct {
