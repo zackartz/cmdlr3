@@ -76,7 +76,7 @@ func (c *Command) ConvertSubcommandArray() []*disgord.ApplicationCommandOption {
 			Name:        command.Name,
 			Description: command.Description,
 			Type:        disgord.OptionTypeSubCommand,
-			Options:     nil,
+			Options:     command.Options,
 		})
 	}
 
