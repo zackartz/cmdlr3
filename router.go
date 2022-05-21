@@ -36,10 +36,11 @@ func (r *Router) InitializeCommands() disgord.HandlerReady {
 
 		for i := range r.Commands {
 			if err := r.Client.ApplicationCommand(user.ID).Global().Create(&disgord.CreateApplicationCommand{
-				Type:        disgord.ApplicationCommandType(r.Commands[i].Type),
-				Name:        r.Commands[i].Name,
-				Description: r.Commands[i].Description,
-				Options:     append(r.Commands[i].Options, r.Commands[i].ConvertSubcommandArray()...),
+				Type:                     disgord.ApplicationCommandType(r.Commands[i].Type),
+				Name:                     r.Commands[i].Name,
+				Description:              r.Commands[i].Description,
+				Options:                  append(r.Commands[i].Options, r.Commands[i].ConvertSubcommandArray()...),
+				DefaultMemberPermissions: disgord.PermissionAdministrator,
 			}); err != nil {
 				log.Fatal(err)
 			}
