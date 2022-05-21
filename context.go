@@ -15,8 +15,9 @@ type Ctx struct {
 
 type ExecutionHandler func(ctx *Ctx)
 
-func (ctx *Ctx) ResponseText(text string) error {
+func (ctx *Ctx) ResponseText(text string, ephemeral bool) error {
 	var components []*disgord.MessageComponent
+	var flags disgord.MessageFlag
 
 	if GetComponentsFromCommand(ctx.Command) != nil {
 		components = []*disgord.MessageComponent{
@@ -27,11 +28,16 @@ func (ctx *Ctx) ResponseText(text string) error {
 		}
 	}
 
+	if ephemeral == true {
+		flags = disgord.MessageFlagEphemeral
+	}
+
 	err := ctx.Interaction.Reply(context.Background(), *ctx.Session, &disgord.CreateInteractionResponse{
 		Type: 4,
 		Data: &disgord.CreateInteractionResponseData{
 			Content:    text,
 			Components: components,
+			Flags:      flags,
 		},
 	})
 	if err != nil {
@@ -41,8 +47,9 @@ func (ctx *Ctx) ResponseText(text string) error {
 	return nil
 }
 
-func (ctx *Ctx) ResponseEmbed(embed *disgord.Embed) error {
+func (ctx *Ctx) ResponseEmbed(embed *disgord.Embed, ephemeral bool) error {
 	var components []*disgord.MessageComponent
+	var flags disgord.MessageFlag
 
 	if GetComponentsFromCommand(ctx.Command) != nil {
 		components = []*disgord.MessageComponent{
@@ -53,11 +60,16 @@ func (ctx *Ctx) ResponseEmbed(embed *disgord.Embed) error {
 		}
 	}
 
+	if ephemeral == true {
+		flags = disgord.MessageFlagEphemeral
+	}
+
 	err := ctx.Interaction.Reply(context.Background(), *ctx.Session, &disgord.CreateInteractionResponse{
 		Type: 4,
 		Data: &disgord.CreateInteractionResponseData{
 			Embeds:     []*disgord.Embed{embed},
 			Components: components,
+			Flags:      flags,
 		},
 	})
 	if err != nil {
@@ -67,8 +79,9 @@ func (ctx *Ctx) ResponseEmbed(embed *disgord.Embed) error {
 	return nil
 }
 
-func (ctx *Ctx) ResponseTextEmbed(text string, embed *disgord.Embed) error {
+func (ctx *Ctx) ResponseTextEmbed(text string, embed *disgord.Embed, ephemeral bool) error {
 	var components []*disgord.MessageComponent
+	var flags disgord.MessageFlag
 
 	if GetComponentsFromCommand(ctx.Command) != nil {
 		components = []*disgord.MessageComponent{
@@ -79,12 +92,17 @@ func (ctx *Ctx) ResponseTextEmbed(text string, embed *disgord.Embed) error {
 		}
 	}
 
+	if ephemeral == true {
+		flags = disgord.MessageFlagEphemeral
+	}
+
 	err := ctx.Interaction.Reply(context.Background(), *ctx.Session, &disgord.CreateInteractionResponse{
 		Type: 4,
 		Data: &disgord.CreateInteractionResponseData{
 			Embeds:     []*disgord.Embed{embed},
 			Content:    text,
 			Components: components,
+			Flags:      flags,
 		},
 	})
 	if err != nil {
@@ -104,8 +122,9 @@ type SubCommandCtx struct {
 
 type SubCommandExecutionHandler func(ctx *SubCommandCtx)
 
-func (ctx *SubCommandCtx) ResponseText(text string) error {
+func (ctx *SubCommandCtx) ResponseText(text string, ephemeral bool) error {
 	var components []*disgord.MessageComponent
+	var flags disgord.MessageFlag
 
 	if GetComponentsFromSubCommand(ctx.Command) != nil {
 		components = []*disgord.MessageComponent{
@@ -116,11 +135,16 @@ func (ctx *SubCommandCtx) ResponseText(text string) error {
 		}
 	}
 
+	if ephemeral == true {
+		flags = disgord.MessageFlagEphemeral
+	}
+
 	err := ctx.Interaction.Reply(context.Background(), *ctx.Session, &disgord.CreateInteractionResponse{
 		Type: 4,
 		Data: &disgord.CreateInteractionResponseData{
 			Content:    text,
 			Components: components,
+			Flags:      flags,
 		},
 	})
 	if err != nil {
@@ -130,8 +154,9 @@ func (ctx *SubCommandCtx) ResponseText(text string) error {
 	return nil
 }
 
-func (ctx *SubCommandCtx) ResponseEmbed(embed *disgord.Embed) error {
+func (ctx *SubCommandCtx) ResponseEmbed(embed *disgord.Embed, ephemeral bool) error {
 	var components []*disgord.MessageComponent
+	var flags disgord.MessageFlag
 
 	if GetComponentsFromSubCommand(ctx.Command) != nil {
 		components = []*disgord.MessageComponent{
@@ -142,11 +167,16 @@ func (ctx *SubCommandCtx) ResponseEmbed(embed *disgord.Embed) error {
 		}
 	}
 
+	if ephemeral == true {
+		flags = disgord.MessageFlagEphemeral
+	}
+
 	err := ctx.Interaction.Reply(context.Background(), *ctx.Session, &disgord.CreateInteractionResponse{
 		Type: 4,
 		Data: &disgord.CreateInteractionResponseData{
 			Embeds:     []*disgord.Embed{embed},
 			Components: components,
+			Flags:      flags,
 		},
 	})
 	if err != nil {
@@ -156,8 +186,9 @@ func (ctx *SubCommandCtx) ResponseEmbed(embed *disgord.Embed) error {
 	return nil
 }
 
-func (ctx *SubCommandCtx) ResponseTextEmbed(text string, embed *disgord.Embed) error {
+func (ctx *SubCommandCtx) ResponseTextEmbed(text string, embed *disgord.Embed, ephemeral bool) error {
 	var components []*disgord.MessageComponent
+	var flags disgord.MessageFlag
 
 	if GetComponentsFromSubCommand(ctx.Command) != nil {
 		components = []*disgord.MessageComponent{
@@ -168,12 +199,17 @@ func (ctx *SubCommandCtx) ResponseTextEmbed(text string, embed *disgord.Embed) e
 		}
 	}
 
+	if ephemeral == true {
+		flags = disgord.MessageFlagEphemeral
+	}
+
 	err := ctx.Interaction.Reply(context.Background(), *ctx.Session, &disgord.CreateInteractionResponse{
 		Type: 4,
 		Data: &disgord.CreateInteractionResponseData{
 			Embeds:     []*disgord.Embed{embed},
 			Content:    text,
 			Components: components,
+			Flags:      flags,
 		},
 	})
 	if err != nil {
