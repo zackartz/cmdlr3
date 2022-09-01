@@ -40,7 +40,6 @@ func (r *Router) InitializeCommands() disgord.HandlerReady {
 				Name:                     r.Commands[i].Name,
 				Description:              r.Commands[i].Description,
 				Options:                  append(r.Commands[i].Options, r.Commands[i].ConvertSubcommandArray()...),
-				DefaultMemberPermissions: disgord.PermissionAdministrator,
 			}); err != nil {
 				log.Fatal(err)
 			}
