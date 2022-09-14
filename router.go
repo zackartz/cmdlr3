@@ -83,13 +83,15 @@ func (r *Router) Handler() disgord.HandlerInteractionCreate {
 				if h.Data.Options != nil {
 					subCmd := checkForSubCommand(cmd, h.Data.Options)
 
-					subCmd.Handler(&SubCommandCtx{
-						Client:      r.Client,
-						Session:     &s,
-						Interaction: h,
-						Command:     subCmd,
-						Router:      r,
-					})
+					if subCmd != nil {
+						subCmd.Handler(&SubCommandCtx{
+							Client:      r.Client,
+							Session:     &s,
+							Interaction: h,
+							Command:     subCmd,
+							Router:      r,
+						})
+					}
 					return
 				}
 
